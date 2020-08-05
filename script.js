@@ -1,0 +1,55 @@
+document.getElementById('pinInput').value = "";  
+document.getElementById('screen').value = "";    
+let attempt  = 3; 
+
+// Function for making random numbers.
+function randomNumber(){
+    let num = 1000 + Math.round(Math.random() * 9000);
+    document.getElementById('pinInput').value = num;
+}
+// Function for displaying numbers on screen.
+function numPad(num){
+    document.getElementById('screen').value += num;
+}
+// Function for clearing all numbers from screen.
+function allClear(){
+    document.getElementById('screen').value = '';
+}
+// Function for deleting numbers one by one from screen.
+function backSpace(){
+    let screen = document.getElementById('screen').value;
+    let backSpace = screen.slice(0, screen.length - 1 );
+    document.getElementById('screen').value = backSpace;
+}
+// Function for submitting button.
+function submit(){
+    const randomPin = document.getElementById('pinInput').value;
+    const screen = document.getElementById('screen').value;
+
+    //if submitted pin is correct then random pin and screen section will be cleared.
+
+    if( randomPin == screen && randomPin != '' && screen != '' ){
+        message('rightPin', 'wrongPin');
+        document.getElementById('pinInput').value = ""; 
+        document.getElementById('screen').value = "";
+        
+    }
+
+    //if submitted pin is wrong then only screen section will be cleared.
+    else {
+        attempt--;
+        document.getElementById('tryCount').innerText = attempt;
+        document.getElementById('screen').value = "";
+        message('wrongPin', 'rightPin');
+           if ( attempt == 0 ){   
+            message('errorMessage', 'numberPad');
+            document.getElementById('wrongPin').style.display = 'none';
+           }           
+        }
+    }
+
+// function for showing success or error messages.
+function message(show, hide){
+    document.getElementById(show).style.display = 'block';
+    document.getElementById(hide).style.display = 'none';
+}
